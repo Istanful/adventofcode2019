@@ -1,13 +1,27 @@
-module DayOne exposing(calculateFuel, puzzleInput, solve)
+module DayOne exposing(fuel, moduleFuel, puzzleInput, solvePartOne, solvePartTwo)
 
 import List exposing(foldl)
 import Debug exposing(..)
 
-solve inputs =
-  foldl (\num acc -> acc + (calculateFuel num)) 0 inputs
+solvePartOne inputs =
+  foldl (\num acc -> acc + (fuel num)) 0 inputs
 
-calculateFuel : Int -> Int
-calculateFuel mass =
+solvePartTwo inputs =
+  foldl (\num acc -> acc + (moduleFuel 0 num)) 0 inputs
+
+moduleFuel : Int -> Int -> Int
+moduleFuel carry mass =
+  let
+    result = fuel mass
+    next = fuel result
+  in
+    if next > 0 then
+      moduleFuel (carry + result) result
+    else
+      carry + result
+
+fuel : Int -> Int
+fuel mass =
   floor (toFloat mass / 3) - 2
 
 puzzleInput : List Int
