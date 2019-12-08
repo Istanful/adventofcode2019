@@ -62,7 +62,7 @@ suite =
         ]
     , describe "DayOne.solvePartTwo" <|
         [test "returns the correct solution" <|
-          \() -> Expect.equal (solvePartTwo puzzleInput) 1
+          \() -> Expect.equal (solvePartTwo puzzleInput) 4994396
         ]
     ]
 
