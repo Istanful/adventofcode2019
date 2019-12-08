@@ -3,12 +3,13 @@ module DayTwoTests exposing (suite)
 import Expect exposing (Expectation)
 import Test exposing (..)
 import DayTwo exposing (..)
+import Maybe exposing (withDefault)
 
 
 suite : Test
 suite =
   describe "The day two module"
-    [ describe "DayOne.computer" <|
+    [ describe "DayTwo.computer" <|
         [ test "adds values" <|
             \() -> Expect.equal (computer [1, 0, 0, 0, 99]) [2, 0, 0, 0, 99]
         , test "multiplies values" <|
@@ -19,7 +20,13 @@ suite =
             \() -> Expect.equal (computer [2, 4, 4, 5, 99, 0]) [2, 4, 4, 5, 99, 9801]
         , test "puzzle example 4" <|
             \() -> Expect.equal (computer [1, 1, 1, 4, 99, 5, 6, 0, 99]) [30, 1, 1, 4, 2, 5, 6, 0, 99]
-        , test "solves puzzle" <|
-            \() -> Expect.equal (computer puzzleInput) expectedSolution
+        ]
+    , describe "DayTwo.solvePartOne" <|
+        [ test "solves part one" <|
+            \() -> Expect.equal (withDefault 0 (solvePartOne puzzleInput)) 3716293
+        ]
+    , describe "DayTwo.solvePartTwo" <|
+        [ skip <| test "solves part two" <|
+            \() -> Expect.equal (solvePartTwo puzzleInput) 6429
         ]
     ]

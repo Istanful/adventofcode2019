@@ -1,8 +1,48 @@
-module DayTwo exposing(..)
+module DayTwo exposing(puzzleInput, solvePartOne, solvePartTwo, computer)
 
 import List exposing(foldl, tail, take, drop, indexedMap, member, filter, map, any, concatMap)
 import Tuple exposing(second, first)
 import Basics exposing(remainderBy, modBy)
+import Maybe exposing (withDefault)
+
+solvePartOne input =
+  List.head <|
+    computer (setInputPairs input 12 2)
+
+solvePartTwo input =
+  let
+    (noun, verb) = test input 0 0
+  in
+    100 * noun + verb
+
+test input noun verb =
+  let
+    expected = 19690720
+    result = computer (setInputPairs input noun verb)
+    actual = withDefault 0 (List.head result)
+    (nextNoun, nextVerb) = (nextInputPairs noun verb)
+  in
+    if actual == expected then
+      (noun, verb)
+    else
+      test input nextNoun nextVerb
+
+nextInputPairs noun verb =
+  if (verb == 99) then
+    (noun + 1, 0)
+  else
+    (noun, verb + 1)
+
+setInputPairs input noun verb =
+  input
+    |> indexedMap (\i num ->
+      if (i == 1) then
+        noun
+      else if (i == 2) then
+        verb
+      else
+        num
+    )
 
 computer : List Int -> List Int
 computer instructions =
@@ -102,8 +142,8 @@ multiply data =
 
 puzzleInput =
   [ 1
-  , 12
-  , 2
+  , 0
+  , 0
   , 3
   , 1
   , 1
@@ -213,130 +253,6 @@ puzzleInput =
   , 2
   , 107
   , 111
-  , 1
-  , 6
-  , 111
-  , 0
-  , 99
-  , 2
-  , 14
-  , 0
-  , 0
-  ]
-
-expectedSolution =
-  [ 3716293
-  , 12
-  , 2
-  , 2
-  , 1
-  , 1
-  , 2
-  , 3
-  , 1
-  , 3
-  , 4
-  , 3
-  , 1
-  , 5
-  , 0
-  , 3
-  , 2
-  , 10
-  , 1
-  , 48
-  , 2
-  , 19
-  , 6
-  , 96
-  , 2
-  , 13
-  , 23
-  , 480
-  , 1
-  , 9
-  , 27
-  , 483
-  , 2
-  , 31
-  , 9
-  , 1449
-  , 1
-  , 6
-  , 35
-  , 1451
-  , 2
-  , 10
-  , 39
-  , 5804
-  , 1
-  , 5
-  , 43
-  , 5805
-  , 1
-  , 5
-  , 47
-  , 5806
-  , 2
-  , 51
-  , 6
-  , 11612
-  , 2
-  , 10
-  , 55
-  , 46448
-  , 1
-  , 59
-  , 9
-  , 46451
-  , 2
-  , 13
-  , 63
-  , 232255
-  , 1
-  , 10
-  , 67
-  , 232259
-  , 1
-  , 71
-  , 5
-  , 232260
-  , 1
-  , 75
-  , 6
-  , 232262
-  , 1
-  , 10
-  , 79
-  , 232266
-  , 1
-  , 5
-  , 83
-  , 232267
-  , 1
-  , 5
-  , 87
-  , 232268
-  , 2
-  , 91
-  , 6
-  , 464536
-  , 2
-  , 6
-  , 95
-  , 929072
-  , 2
-  , 10
-  , 99
-  , 3716288
-  , 1
-  , 103
-  , 5
-  , 3716289
-  , 1
-  , 2
-  , 107
-  , 3716291
   , 1
   , 6
   , 111
